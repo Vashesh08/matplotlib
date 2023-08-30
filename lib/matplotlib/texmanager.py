@@ -199,6 +199,7 @@ class TexManager:
         """Return the complete TeX source for processing a TeX string."""
         font_preamble, fontcmd = cls._get_font_preamble_and_command()
         baselineskip = 1.25 * fontsize
+        tex = tex.replace("%", "\%")
         return "\n".join([
             r"\documentclass{article}",
             r"% Pass-through \mathdefault, which is used in non-usetex mode",
