@@ -1554,9 +1554,11 @@ class _AxesBase(martist.Artist):
 
         Parameters
         ----------
-        cycler : Cycler
+        cycler : `~cycler.Cycler`
             Set the given Cycler. *None* resets to the cycle defined by the
             current style.
+
+            .. ACCEPTS: `~cycler.Cycler`
 
         label : str
             The property key. Must be a valid `.Artist` property.
@@ -2408,7 +2410,7 @@ class _AxesBase(martist.Artist):
             vertices.append(curve([0, *dzeros, 1]))
 
         if len(vertices):
-            vertices = np.row_stack(vertices)
+            vertices = np.vstack(vertices)
 
         patch_trf = patch.get_transform()
         updatex, updatey = patch_trf.contains_branch_seperately(self.transData)
@@ -3553,6 +3555,8 @@ class _AxesBase(martist.Artist):
             The lower and upper bounds. If *None*, the respective axis bound
             is not modified.
 
+            .. ACCEPTS: (lower: float, upper: float)
+
         See Also
         --------
         get_xbound
@@ -3606,6 +3610,8 @@ class _AxesBase(martist.Artist):
         """
         if limit is not None:
             converted_limit = convert(limit)
+            if isinstance(converted_limit, np.ndarray):
+                converted_limit = converted_limit.squeeze()
             if (isinstance(converted_limit, Real)
                     and not np.isfinite(converted_limit)):
                 raise ValueError("Axis limits cannot be NaN or Inf")
@@ -3626,7 +3632,7 @@ class _AxesBase(martist.Artist):
             (*left*, *right*) as the first positional argument (or as
             the *left* keyword argument).
 
-            .. ACCEPTS: (bottom: float, top: float)
+            .. ACCEPTS: (left: float, right: float)
 
         right : float, optional
             The right xlim in data coordinates. Passing *None* leaves the
@@ -3801,6 +3807,8 @@ class _AxesBase(martist.Artist):
         lower, upper : float or None
             The lower and upper bounds. If *None*, the respective axis bound
             is not modified.
+
+         .. ACCEPTS: (lower: float, upper: float)
 
         See Also
         --------

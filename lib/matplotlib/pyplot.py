@@ -938,7 +938,7 @@ default: None
 
         for hookspecs in rcParams["figure.hooks"]:
             module_name, dotted_name = hookspecs.split(":")
-            obj = importlib.import_module(module_name)
+            obj: Any = importlib.import_module(module_name)
             for part in dotted_name.split("."):
                 obj = getattr(obj, part)
             obj(fig)
@@ -1153,7 +1153,7 @@ def axes(
 
         - *None*: A new full window Axes is added using
           ``subplot(**kwargs)``.
-        - 4-tuple of floats *rect* = ``[left, bottom, width, height]``.
+        - 4-tuple of floats *rect* = ``(left, bottom, width, height)``.
           A new Axes is added with dimensions *rect* in normalized
           (0, 1) units using `~.Figure.add_axes` on the current figure.
 
@@ -2961,10 +2961,10 @@ def errorbar(
     elinewidth: float | None = None,
     capsize: float | None = None,
     barsabove: bool = False,
-    lolims: bool = False,
-    uplims: bool = False,
-    xlolims: bool = False,
-    xuplims: bool = False,
+    lolims: bool | ArrayLike = False,
+    uplims: bool | ArrayLike = False,
+    xlolims: bool | ArrayLike = False,
+    xuplims: bool | ArrayLike = False,
     errorevery: int | tuple[int, int] = 1,
     capthick: float | None = None,
     *,
