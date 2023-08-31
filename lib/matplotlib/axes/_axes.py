@@ -3318,8 +3318,11 @@ class Axes(_AxesBase):
                     raise TypeError(
                         'autopct must be callable or a format string')
                 
-                if mpl.rcParams["text.usetex"] or 'usetex' in textprops:
-                    s = s.replace("%", "\%")
+                if 'usetex' in textprops:
+                    if textprops['usetex']:
+                        s = s.replace("%", "\%")
+                elif mpl.rcParams["text.usetex"]:
+                    s = s.replace("%", r"\%")
 
                 t = self.text(xt, yt, s,
                               clip_on=False,
